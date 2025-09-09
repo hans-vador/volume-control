@@ -117,8 +117,15 @@ body {
 }
 
 @keyframes pulse {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.5; }
+
+  0%,
+  100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0.5;
+  }
 }
 
 .input-group {
@@ -340,29 +347,29 @@ body {
   .app {
     padding: 16px;
   }
-  
+
   .container {
     padding: 24px;
     border-radius: 20px;
   }
-  
+
   .header h1 {
     font-size: 2rem;
   }
-  
+
   .input-with-button {
     flex-direction: column;
   }
-  
+
   .ping-button {
     justify-content: center;
   }
-  
+
   .volume-header {
     flex-direction: column;
     gap: 16px;
   }
-  
+
   .volume-value {
     font-size: 2rem;
   }
@@ -372,15 +379,15 @@ body {
   .container {
     padding: 20px;
   }
-  
+
   .header h1 {
     font-size: 1.8rem;
   }
-  
+
   .logo-icon {
     font-size: 36px;
   }
-  
+
   .volume-section {
     padding: 24px;
   }
