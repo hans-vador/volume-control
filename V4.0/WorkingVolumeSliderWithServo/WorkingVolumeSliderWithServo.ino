@@ -3,14 +3,10 @@
 Servo myservo;
 
 // ===== WiFi config =====
-char ssid[] = "PeeVee22";
-char pass[] = "BaiAddm#1939@28";
+char ssid[] = ""; // Fill Wifi Name
+char pass[] = ""; // Fill Wifi Passoword
 WiFiServer server(80);
 
-// (Optional) STATIC IP FALLBACK — uncomment if DHCP keeps failing
-// IPAddress local(192,168,1,42);
-// IPAddress gateway(192,168,1,1);
-// IPAddress subnet(255,255,255,0);
 
 // ===== Helpers: HTTP responses =====
 void sendOK(WiFiClient& c, const char* body="ok", const char* type="text/plain") {
@@ -73,9 +69,6 @@ void setup() {
   Serial.println();
   Serial.println("==== UNO R4 WiFi — Volume Server ====");
   Serial.print("Target SSID: "); Serial.println(ssid);
-
-  // Uncomment for static IP fallback (if you keep getting IP 0.0.0.0)
-  // WiFi.config(local, gateway, subnet);
 
   Serial.print("Connecting (link)… ");
   WiFi.begin(ssid, pass);
@@ -145,7 +138,7 @@ void loop() {
     return;
   }
 
-  // /ping endpoint
+  // ping endpoint
   if (line.indexOf("GET /ping") >= 0) {
     Serial.print("[PING] from ");
     Serial.println(c.remoteIP());
@@ -158,17 +151,15 @@ void loop() {
       Serial.println("[VOL] bad/missing level param");
       sendBadRequest(c, "Expected /volume?level=0..100");
     } else {
-      // For now just log; later map 0..100 -> servo angle 0..180 and write to the servo
       Serial.print("[VOL] set to "); Serial.print(level); Serial.println("%");
-      // Example future mapping:
       int angle = map(level, 0, 100, 180, 0);
       myservo.write(angle);
-      // sendOK with a tiny JSON-ish confirmation
+
       String body = String("{\"ok\":true,\"level\":") + level + "}\n";
       sendOK(c, body.c_str(), "application/json");
     }
   }
-  // unknown -> generic 200
+
   else {
     sendOK(c, "ok");
   }
